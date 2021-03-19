@@ -1,5 +1,6 @@
 import 'package:daily_recipe/screens/auth/home_screen.dart';
 import 'package:daily_recipe/screens/auth/login_screen.dart';
+import 'package:daily_recipe/screens/home_screen.dart';
 import 'package:flutter/widgets.dart';
 
 /// `Routes` definition
