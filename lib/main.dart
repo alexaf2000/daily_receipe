@@ -20,6 +20,8 @@ void setApplicationSettings() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  // Set totally transparent notifications bar
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 }
 
 class Application extends StatelessWidget {

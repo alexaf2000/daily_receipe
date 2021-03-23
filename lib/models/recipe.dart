@@ -6,7 +6,10 @@ class Recipe {
   String foodType;
   Rate rate;
   int calories;
-  Duration preparationTime;
+  int preparationTime;
+  int serving;
+  String imagePath;
+  bool like;
 
   // Constructor
   Recipe({
@@ -15,5 +18,8 @@ class Recipe {
     this.rate,
     this.calories,
     this.preparationTime,
+    this.serving,
+    this.imagePath,
+    this.like = false
   });
 }
