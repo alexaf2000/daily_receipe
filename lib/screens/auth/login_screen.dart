@@ -1,5 +1,10 @@
+import 'package:daily_recipe/helpers/validator.dart';
+import 'package:daily_recipe/models/user.dart';
+import 'package:daily_recipe/providers/auth_provider.dart';
 import 'package:daily_recipe/widgets/logo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -7,23 +12,26 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  //FormController _formController;
-  TextEditingController _emailController;
-  TextEditingController _passwordController;
+  final TextEditingController _emailController = new TextEditingController();
+  final TextEditingController _passwordController = new TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   /// Get the `FormController` and fakes
   /// a login.
   void onClickSignIn(BuildContext context) {
-    // Removes the actual screen and pushes to the home
-    Navigator.of(context).popAndPushNamed('/home');
+    // Validate if the form is validated
+    if (_formKey.currentState.validate()) {
+      // Creates the user (simulate an API call)
+      User user =
+          new User(email: _emailController.text, name: "Alex", surname: "AF");
+      Provider.of<AuthProvider>(context, listen: false).logIn(user);
+      // Removes the actual screen and pushes to the home
+      Navigator.of(context).popAndPushNamed('/home');
+    }
   }
 
   @override
   void initState() {
-    // Inits the controllers for the inputs
-    _emailController = new TextEditingController();
-    _passwordController = new TextEditingController();
-
     super.initState();
   }
 
@@ -61,62 +69,115 @@ class _LoginScreenState extends State<LoginScreen> {
                       Container(
                         child: Expanded(
                           child: Form(
-                            child: Column(children: [
-                              SizedBox(height: 40),
-                              Logo(width: 250),
-                              SizedBox(height: 30),
-                              Text("Sign In",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18)),
-                              SizedBox(height: 30),
-                              TextFormField(
-                                controller: _emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xFF4F5052)),
-                                    ),
-                                    hintText: 'Email Address',
-                                    prefixIcon: Icon(
-                                        Icons.supervised_user_circle,
-                                        color: Color(0xFFB2B7C6))),
-                              ),
-                              SizedBox(height: 20),
-                              TextFormField(
-                                controller: _passwordController,
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xFF4F5052)),
-                                    ),
-                                    hintText: 'Password',
-                                    fillColor: Colors.red,
-                                    prefixIcon: Icon(Icons.lock,
-                                        color: Color(0xFFB2B7C6))),
-                              ),
-                              SizedBox(height: 60),
-                              Container(
-                                width: double.infinity,
-                                child: RaisedButton(
-                                    child: Text("Sign In",
-                                        style: TextStyle(color: Colors.white)),
-                                    padding: EdgeInsets.symmetric(vertical: 20),
-                                    onPressed: () => onClickSignIn(context),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        side: BorderSide(color: Colors.red)),
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                            ]),
+                            key: _formKey,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 40),
+                                  Logo(width: 250),
+                                  SizedBox(height: 30),
+                                  Text("Sign In",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                      )),
+                                  SizedBox(height: 30),
+                                  TextFormField(
+                                    controller: _emailController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    style: TextStyle(color: Colors.white),
+                                    validator: (value) {
+                                      Validator validator =
+                                          new Validator(value);
+                                      String validation = validator.email();
+                                      return validation;
+                                    },
+                                    decoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(0xFF4F5052)),
+                                        ),
+                                        hintText: 'Email Address',
+                                        prefixIcon: SizedBox(
+                                          height: 24,
+                                          width: 24,
+                                          child: IconButton(
+                                              padding: EdgeInsets.all(0.0),
+                                              color: Colors.red,
+                                              icon: SvgPicture.asset(
+                                                'assets/icons/email.svg',
+                                              ),
+                                              onPressed: () {}),
+                                        )),
+                                  ),
+                                  SizedBox(height: 20),
+                                  TextFormField(
+                                    controller: _passwordController,
+                                    obscureText: true,
+                                    style: TextStyle(color: Colors.white),
+                                    validator: (value) {
+                                      Validator validator =
+                                          new Validator(value);
+                                      String validation = validator.password();
+                                      return validation;
+                                    },
+                                    decoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(0xFF4F5052)),
+                                        ),
+                                        hintText: 'Password',
+                                        fillColor: Colors.red,
+                                        prefixIcon: SizedBox(
+                                          height: 24,
+                                          width: 24,
+                                          child: IconButton(
+                                              padding: EdgeInsets.all(0.0),
+                                              color: Colors.red,
+                                              icon: SvgPicture.asset(
+                                                'assets/icons/password.svg',
+                                              ),
+                                              onPressed: () {}),
+                                        )),
+                                  ),
+                                  Align(
+                                      alignment: Alignment.topRight,
+                                      child: FlatButton(
+                                          splashColor: Color(0xFF0D6D85),
+                                          child: Text("Forgot Password?",
+                                              style: TextStyle(
+                                                  color: Color(0xFF128FAE))),
+                                          onPressed: () {})),
+                                  SizedBox(height: 60),
+                                  Container(
+                                    width: double.infinity,
+                                    child: RaisedButton(
+                                        child: Text(
+                                          "Sign In",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 20),
+                                        onPressed: () => onClickSignIn(context),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                            side:
+                                                BorderSide(color: Colors.red)),
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ]),
                           ),
                         ),
                       ),
                       RichText(
                           text: TextSpan(children: [
-                        TextSpan(text: "Don't have an account?"),
+                        TextSpan(
+                            text: "Don't have an account?",
+                            style: TextStyle(color: Color(0xFFB2B7C6))),
                         WidgetSpan(child: SizedBox(width: 5)),
                         TextSpan(
                             text: "Register",
