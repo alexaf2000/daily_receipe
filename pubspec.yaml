@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   # State management
   provider: ^4.3.3
+  # UI
+  flutter_svg: ^0.19.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -65,16 +67,16 @@ flutter:
   fonts:
     - family: AbrilFatFace
       fonts:
-        - asset: assets/abril_fatface/regular.ttf
+        - asset: assets/fonts/abril_fatface/regular.ttf
     - family: Hellix
       fonts:
-        - asset: assets/hellix/Hellix-Black.ttf
-        - asset: assets/hellix/Hellix-Bold.ttf
-        - asset: assets/hellix/Hellix-Medium.ttf
-        - asset: assets/hellix/Hellix-Regular.ttf
-        - asset: assets/hellix/Hellix-Light.ttf
-        - asset: assets/hellix/Hellix-SemiBold.ttf
-        - asset: assets/hellix/Hellix-Thin.ttf
+        - asset: assets/fonts/hellix/Hellix-Black.ttf
+        - asset: assets/fonts/hellix/Hellix-Bold.ttf
+        - asset: assets/fonts/hellix/Hellix-Medium.ttf
+        - asset: assets/fonts/hellix/Hellix-Regular.ttf
+        - asset: assets/fonts/hellix/Hellix-Light.ttf
+        - asset: assets/fonts/hellix/Hellix-SemiBold.ttf
+        - asset: assets/fonts/hellix/Hellix-Thin.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

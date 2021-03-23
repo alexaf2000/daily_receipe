@@ -7,4 +7,13 @@ class Recipe {
   Rate rate;
   int calories;
   Duration preparationTime;
+
+  // Constructor
+  Recipe({
+    this.name,
+    this.foodType,
+    this.rate,
+    this.calories,
+    this.preparationTime,
+  });
 }

@@ -3,6 +3,7 @@
 class Rate {
   int puntuation;
 
+  // Constructor
   Rate({puntuation}) {
     // Only set if is lower than 0
     if (puntuation <= 5) {
